@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, FlatList } from 'react-native'  // SectionList is a thing
-import ListItem from '../components/ListItem'
+import { FlatList, StyleSheet } from 'react-native'  // SectionList is a thing
+
 import Screen from '../components/Screen'
-import ListItemSeparator from '../components/ListItemSeparator'
-import ListItemDeleteAction from '../components/ListItemDeleteAction'
-import Icon from '../components/Icon'
+import { ListItem, ListItemDeleteAction, ListItemSeparator } from '../components/lists'
 
 const initialMessages = [
     {
         id: 1,
-        title: 'T1',
-        description: 'D1',
+        title: 'This is a really long string of text thank you very much',
+        description: 'Now that we found love what are we gonna do with it? Make Natty shoot, Make Natty shoot.',
         image: require('../assets/mosh.jpg')
     },
     {
@@ -20,7 +18,7 @@ const initialMessages = [
         image: require('../assets/mosh.jpg')
     }
 ]
-function MessagesScreen(props) {
+export default function MessagesScreen(props) {
     const [messages, setMessages] = useState(initialMessages)
     const [refreshing, setRefreshing] = useState(false)
 
@@ -29,7 +27,7 @@ function MessagesScreen(props) {
     }
 
     return (
-        <Screen>
+        <Screen style={styles.container}>
             <FlatList 
                 data={messages}
                 keyExtractor={message => message.id.toString()}
@@ -38,13 +36,14 @@ function MessagesScreen(props) {
                         title={item.title}
                         subTitle={item.description}
                         image={item.image}
-                        IconComponent={<Icon/>}
+                        // IconComponent={<Icon/>}
                         onPress={()=> console.log('selected', item)}
                         renderRightActions={() => 
                             <ListItemDeleteAction 
                                 onPress={() => handleDelete(item)} 
                             />
                         }
+                        showChevrons
                     />
                 )}
                 ItemSeparatorComponent={ListItemSeparator}
@@ -64,10 +63,9 @@ function MessagesScreen(props) {
     );
 }
 
-export default MessagesScreen;
-
 const styles = StyleSheet.create({
-    separator: {
-
+    container: {
+        flex: 1
     }
 })
+

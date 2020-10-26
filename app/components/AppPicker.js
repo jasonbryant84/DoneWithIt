@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { StyleSheet, View, TouchableWithoutFeedback, Modal, Button, FlatList, Text } from 'react-native'
+import { StyleSheet, View, TouchableWithoutFeedback, Modal, Button, FlatList } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import Screen from './Screen'
@@ -8,8 +8,17 @@ import AppText from './AppText'
 import PickerItem from './PickerItem'
 
 
-export default function AppPicker({icon, items, onSelectItem, selectedItem, placeholder}) {
+export default function AppPicker({
+    icon, 
+    items, 
+    numberOfColumns = 1,
+    onSelectItem, 
+    PickerItemComponent = PickerItem, // default value
+    selectedItem, 
+    placeholder
+}) {
     const [modalVisible, setModalVisible] = useState(false)
+
     return (
         <Fragment>
             <TouchableWithoutFeedback 
@@ -24,16 +33,15 @@ export default function AppPicker({icon, items, onSelectItem, selectedItem, plac
                             style={styles.icon} 
                         /> 
                     }
-                    <AppText 
-                        style={styles.text}
-                    >
-                        {selectedItem ? selectedItem.label : placeholder}
-                    </AppText>
+                    { selectedItem ? 
+                        <AppText style={styles.text}>{selectedItem.label}</AppText> :
+                        <AppText style={styles.placeholder}>{placeholder}</AppText>
+                    }
                     <MaterialCommunityIcons 
-                            name={'chevron-down'} 
-                            size={20} 
-                            color={defaultStyles.colors.medium} 
-                        />
+                        name={'chevron-down'} 
+                        size={20} 
+                        color={defaultStyles.colors.medium} 
+                    />
                 </View>
             </TouchableWithoutFeedback>
             <Modal
@@ -45,14 +53,16 @@ export default function AppPicker({icon, items, onSelectItem, selectedItem, plac
                         title="close" 
                         onPress={()=> setModalVisible(false)} 
                     />
-                    <View>
+                    <View style={styles.modalIconsContainer}>
                         <FlatList
                             data={items}
                             keyExtractor={(item) => item.value.toString()}
+                            numColumns={numberOfColumns}
                             renderItem={({item}) => (
-                                <PickerItem
+                                <PickerItemComponent
+                                    item={item}
                                     label={item.label}
-                                    onPress={() => {
+                                    onPress={()=> {
                                         setModalVisible(false)
                                         onSelectItem(item)
                                     }}
@@ -71,13 +81,32 @@ const styles = StyleSheet.create({
         backgroundColor: defaultStyles.colors.light,
         borderRadius: 25,
         flexDirection: 'row',
-        width: '100%',
         padding: 15,
         marginVertical: 10
     },
     icon: {
         marginRight: 10
     },
+    modalIconContainer: {
+        width: 200,
+        alignItems: 'center'
+    },
+    modalIconsContainer: {
+        flexDirection: 'row',
+        paddingTop: 10
+    },  
+    modalIcon: {
+        height: 50,
+        width: 50,
+        borderRadius: 25,
+        backgroundColor: defaultStyles.colors.black,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },  
+    placeholder: {
+        color: defaultStyles.colors.medium,
+        flex: 1
+    },  
     text: {
         flex: 1
     }
