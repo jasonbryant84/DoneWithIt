@@ -2,25 +2,25 @@ import React, { useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native' // SectionList is a thing
  
 import Card from '../components/Card' 
-import Screen from '../components/Screen'
-
 import colors from '../config/colors'
+import { routes } from '../navigation'
+import Screen from '../components/Screen'
 
 const initalListings = [
     {
         id: 1,
         title: 'Red jacket for sale!',
-        subTitle: 100,
-        imageStr: require('../assets/jacket.jpg')
+        price: 100,
+        image: require('../assets/jacket.jpg')
     },
     {
         id: 2,
         title: 'Couch in great condition',
-        subTitle: 1000,
-        imageStr: require('../assets/couch.jpg')
+        price: 1000,
+        image: require('../assets/couch.jpg')
     }
 ]
-export default function ListingsScreen() {
+export default function ListingsScreen({ navigation }) {
     const [listings, setListings] = useState(initalListings)
     const [refreshing, setRefreshing] = useState(false)
 
@@ -33,8 +33,11 @@ export default function ListingsScreen() {
                 renderItem={({ item }) => (
                     <Card 
                         title={item.title}
-                        subTitle={'$' + item.subTitle}
-                        image={item.imageStr}
+                        subTitle={'$' + item.price}
+                        image={item.image}
+                        onPress={() => {
+                            navigation.navigate(routes.LISTING_DETAILS, item)
+                        }}
                     />
                 )}
                 refreshing={refreshing}

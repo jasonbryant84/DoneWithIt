@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 
 import Screen from '../components/Screen'
 import Icon from '../components/Icon'
@@ -20,11 +20,12 @@ const menuItems = [
         icon: {
             name: 'email',
             backgroundColor: colors.secondary
-        }
+        },
+        targetScreen: 'Messages'
     }
 ]
 
-function AccountScreen() {
+function AccountScreen({ navigation }) {
     return (
         <Screen style={{ backgroundColor: colors.light }}>
             <ListItem
@@ -32,6 +33,7 @@ function AccountScreen() {
                 title={`Mosh Hamedani`}
                 subTitle={`programmingwithmosh@gmail.com`}
                 image={require('../assets/mosh.jpg')}
+                showChevrons
             />
             <View style={styles.pages}>
                 <FlatList
@@ -47,6 +49,8 @@ function AccountScreen() {
                                     backgroundColor={item.icon.backgroundColor}
                                 />
                             }
+                            onPress={() => navigation.navigate(item.targetScreen) }
+                            showChevrons
                         />
                     }
                     ItemSeparatorComponent={ListItemSeparatorComponent}
@@ -63,6 +67,7 @@ function AccountScreen() {
                         backgroundColor={styles.logout.backgroundColor}
                     />
                 }
+                showChevrons
             />
         </Screen>
     );

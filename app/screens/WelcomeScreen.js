@@ -1,8 +1,18 @@
 import React from 'react';
 import { Text, Image, ImageBackground, StyleSheet, View} from 'react-native';
-import AppButton from '../components/AppButton' 
 
-export default function WelcomeScreen() {
+import AppButton from '../components/AppButton' 
+import { routes } from '../navigation' 
+
+export default function WelcomeScreen({ navigation }) {
+  const handleLogin = () => {
+    navigation.navigate(routes.LOGIN)
+  }
+
+  const handleRegister = () => {
+    navigation.navigate(routes.REGISTER)
+  }
+
   return (
     <ImageBackground 
         blurRadius={10}
@@ -16,8 +26,8 @@ export default function WelcomeScreen() {
         <Text style={styles.tagline}>Sell What You Don't Need</Text>
 
         <View style={styles.ctas}>
-            <AppButton title="Login" color="primary"/>
-            <AppButton title="Register" color="secondary" />
+            <AppButton title="Login" color="primary" onPress={handleLogin}/>
+            <AppButton title="Register" color="secondary" onPress={handleRegister} />
         </View>
     </ImageBackground>
   );
