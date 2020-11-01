@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Image, ImageBackground, StyleSheet, View} from 'react-native';
 
 import AppButton from '../components/AppButton' 
-import { routes } from '../navigation' 
+import routes from '../navigation/routes' // { routes } from index?
 
 export default function WelcomeScreen({ navigation }) {
   const handleLogin = () => {

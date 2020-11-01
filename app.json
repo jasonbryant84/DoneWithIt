@@ -2,13 +2,14 @@
   "expo": {
     "name": "DoneWithIt",
     "slug": "DoneWithIt",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
       "image": "./app/assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#e63c4b"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,6 +23,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "A marketplace for selling the stuff you don't need anymore."
+    "description": "A marketplace for selling the stuff you don't need anymore.",
+    "extra": {
+      "bugsnag": {
+        "apiKey": "8e2124fd76800c779a2a259fad615dc6"
+      }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "@bugsnag/expo/hooks/post-publish.js",
+          "config": {}
+        }
+      ]
+    }
   }
 }

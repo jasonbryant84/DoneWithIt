@@ -13,10 +13,10 @@ export default function ViewImageScreen(props) {
         <View style={styles.deleteIcon}>
           <MaterialCommunityIcons name="trash-can-outline" color="white" size={35} />
         </View>
-        <Image 
+        {/* <Image 
             style={styles.image} 
             source={require('../assets/chair.jpg')}
-        />
+        /> */}
     </View>
   );
 }

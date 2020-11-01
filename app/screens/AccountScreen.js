@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native'
 
-import Screen from '../components/Screen'
+import colors from '../config/colors'
 import Icon from '../components/Icon'
 import { ListItem } from '../components/lists'
-
-import colors from '../config/colors'
 import ListItemSeparatorComponent from '../components/lists/ListItemSeparator'
+import Screen from '../components/Screen'
 
 const menuItems = [
     {
@@ -26,12 +25,14 @@ const menuItems = [
 ]
 
 function AccountScreen({ navigation }) {
+    const { user, logOut } = useAuth()
+
     return (
         <Screen style={{ backgroundColor: colors.light }}>
             <ListItem
                 style={styles.about}
-                title={`Mosh Hamedani`}
-                subTitle={`programmingwithmosh@gmail.com`}
+                title={user.name}
+                subTitle={user.email}
                 image={require('../assets/mosh.jpg')}
                 showChevrons
             />
@@ -67,6 +68,7 @@ function AccountScreen({ navigation }) {
                         backgroundColor={styles.logout.backgroundColor}
                     />
                 }
+                onPress={logOut}
                 showChevrons
             />
         </Screen>
